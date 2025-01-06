@@ -15,10 +15,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
+import com.chargehive.controller.SelectionSort;
+import com.chargehive.controller.InsertionSort;
+import com.chargehive.controller.MergeSort;
+import com.chargehive.controller.BinarySearch;
 /**
  *
- * @author amatyaumanga
+ * @author Umanga Amatya
  */ 
 
 public class ChargeHive extends javax.swing.JFrame {
@@ -80,11 +83,11 @@ public class ChargeHive extends javax.swing.JFrame {
         stationList = new LinkedList<>();
 
         // Registering sample stations
-        registerStation(new Station(100001, "EnergyHub", "Pokhara", "Unavailable", 1500, 5, "Fast"));
-        registerStation(new Station(100002, "EcoCharge", "Kathmandu", "Available", 2000, 4, "Slow"));
-        registerStation(new Station(100003, "SwiftCharge", "Bhaktapur", "Available", 1000, 2, "Fast"));
-        registerStation(new Station(100004, "EVSolutions", "Chitwan", "Available", 4000, 2, "Fast"));
-        registerStation(new Station(100005, "QuickCharge", "Dharan", "Available", 5000, 6, "Slow"));
+        registerStation(new Station(100021, "BayCharge", "Pokhara", "Unavailable", 1500, 5, "Fast"));
+        registerStation(new Station(100042, "EcoCharge", "Kathmandu", "Available", 2000, 4, "Slow"));
+        registerStation(new Station(100013, "SwiftCharge", "Bhaktapur", "Unavailable", 1000, 2, "Fast"));
+        registerStation(new Station(100094, "AmplifyCharge", "Chitwan", "Available", 4000, 2, "Fast"));
+        registerStation(new Station(100065, "QuickCharge", "Dharan", "Available", 5000, 6, "Slow"));
 }
     
     private void startProgress() {
@@ -172,6 +175,11 @@ public class ChargeHive extends javax.swing.JFrame {
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
+        selectionSortComboBox = new javax.swing.JComboBox<>();
+        insertionSortComboBox = new javax.swing.JComboBox<>();
+        mergeSortComboBox = new javax.swing.JComboBox<>();
+        searchBarTextField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
         aboutUsTabPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -469,45 +477,98 @@ public class ChargeHive extends javax.swing.JFrame {
             }
         });
 
+        selectionSortComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sort by ID", "Ascending", "Descending" }));
+        selectionSortComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectionSortComboBoxActionPerformed(evt);
+            }
+        });
+
+        insertionSortComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sort By Name", "Alphabetically", "Reverse Alphabetically" }));
+        insertionSortComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertionSortComboBoxActionPerformed(evt);
+            }
+        });
+
+        mergeSortComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sort by Price", "Ascending", "Descending" }));
+        mergeSortComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mergeSortComboBoxActionPerformed(evt);
+            }
+        });
+
+        searchBarTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBarTextFieldActionPerformed(evt);
+            }
+        });
+
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout adminTabPanelLayout = new javax.swing.GroupLayout(adminTabPanel);
         adminTabPanel.setLayout(adminTabPanelLayout);
         adminTabPanelLayout.setHorizontalGroup(
             adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminTabPanelLayout.createSequentialGroup()
-                .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(adminTabPanelLayout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(78, 78, 78)
-                        .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(portsTextField)
-                            .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100)
-                        .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(locationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(115, 115, 115)
-                        .addComponent(availabilityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(adminTabPanelLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(adminTabPanelLayout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72)
-                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchBarTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(selectionSortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(insertionSortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(mergeSortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(adminTabPanelLayout.createSequentialGroup()
+                            .addGap(138, 138, 138)
+                            .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(78, 78, 78)
+                            .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(portsTextField)
+                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(100, 100, 100)
+                            .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(locationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(115, 115, 115)
+                            .addComponent(availabilityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(adminTabPanelLayout.createSequentialGroup()
+                            .addGap(121, 121, 121)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(adminTabPanelLayout.createSequentialGroup()
+                            .addGap(231, 231, 231)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(81, 81, 81)
+                            .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(72, 72, 72)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(74, 74, 74)
+                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(163, Short.MAX_VALUE))
         );
         adminTabPanelLayout.setVerticalGroup(
             adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(adminTabPanelLayout.createSequentialGroup()
-                .addGap(99, 99, 99)
+                .addGap(39, 39, 39)
+                .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(selectionSortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(insertionSortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mergeSortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBarTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addGroup(adminTabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1041,6 +1102,77 @@ public class ChargeHive extends javax.swing.JFrame {
         jTabbedPane1.setSelectedIndex(1);       
     }//GEN-LAST:event_redirectAdminButtonActionPerformed
 
+    private void selectionSortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionSortComboBoxActionPerformed
+        // TODO add your handling code here:
+        int value = selectionSortComboBox.getSelectedIndex();
+        SelectionSort selectionSort = new SelectionSort();
+        List <Station> sortedList;
+        if (value == 1) {
+            sortedList = selectionSort.sortByStationID(stationList, false);
+            loadListToTable(sortedList);
+
+        } else if (value == 2){
+            sortedList = selectionSort.sortByStationID(stationList, true);
+            loadListToTable(sortedList);
+        }
+    }//GEN-LAST:event_selectionSortComboBoxActionPerformed
+
+    private void insertionSortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertionSortComboBoxActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        int value = insertionSortComboBox.getSelectedIndex();
+
+        // Creating an instance of InsertionSort class
+        InsertionSort insertionSort = new InsertionSort();
+
+        // Sorted list to hold the result
+        List<Station> sortedList;
+
+        // Check the sorting order and sort accordingly
+        if (value == 1) { // Alphabetically
+            sortedList = insertionSort.sortAlphabetically(stationList);
+            loadListToTable(sortedList);
+        } else if (value == 2) { // Reverse Alphabetically
+            sortedList = insertionSort.sortReverseAlphabetically(stationList);
+            loadListToTable(sortedList);
+        }
+    }//GEN-LAST:event_insertionSortComboBoxActionPerformed
+
+    private void mergeSortComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeSortComboBoxActionPerformed
+        // TODO add your handling code here:
+         int value = mergeSortComboBox.getSelectedIndex();
+
+        // Creating an instance of InsertionSort class
+        MergeSort mergeSort = new MergeSort();
+
+        // Sorted list to hold the result
+        List<Station> sortedList;
+
+        // Check the sorting order and sort accordingly
+        if (value == 1) { 
+            sortedList = mergeSort.sortByPriceAscending(stationList);
+            loadListToTable(sortedList);
+        } else if (value == 2) { 
+            sortedList = mergeSort.sortByPriceDescending(stationList);
+            loadListToTable(sortedList);
+        }
+    }//GEN-LAST:event_mergeSortComboBoxActionPerformed
+
+    private void searchBarTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBarTextFieldActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+
+        // Retrieve the text from the search field
+        String searchValue = searchBarTextField.getText().trim();
+        
+        BinarySearch binarySearch = new BinarySearch();
+        // Perform the search and update the table
+        binarySearch.searchAndUpdateTable(searchValue, stationList, 0, stationList.size() - 1, stationTable);
+
+    }//GEN-LAST:event_searchButtonActionPerformed
+
     private void loadListToTable(List<Station> stationList) {
         DefaultTableModel model = (DefaultTableModel) stationTable.getModel();
 
@@ -1099,6 +1231,7 @@ public class ChargeHive extends javax.swing.JFrame {
     private javax.swing.JLabel headingLabel;
     private javax.swing.JPanel homeTabPanel;
     private javax.swing.JTextField idTextField;
+    private javax.swing.JComboBox<String> insertionSortComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1123,6 +1256,7 @@ public class ChargeHive extends javax.swing.JFrame {
     private javax.swing.JPanel loginScreenPanel;
     private javax.swing.JButton logoutButton;
     private javax.swing.JPanel mainScreenPanel;
+    private javax.swing.JComboBox<String> mergeSortComboBox;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JTextField portsTextField;
     private javax.swing.JTextField priceTextField;
@@ -1130,6 +1264,9 @@ public class ChargeHive extends javax.swing.JFrame {
     private javax.swing.JLabel pwdLabel;
     private javax.swing.JPasswordField pwdPasswordField;
     private javax.swing.JButton redirectAdminButton;
+    private javax.swing.JTextField searchBarTextField;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JComboBox<String> selectionSortComboBox;
     private javax.swing.JTable stationTable;
     private javax.swing.JPanel topBarPanel;
     private javax.swing.JTextField typeTextField;
